@@ -1,0 +1,14 @@
+{
+  "name": "purescript-firebase",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/codingedgar/purescript-firebase.git",
+  "author": "codingedgar <codingedgar@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "firebase": "9.9.2"
+  },
+  "devDependencies": {
+    "purs-tidy": "0.9.1"
+  }
+}
