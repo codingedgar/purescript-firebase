@@ -101,9 +101,9 @@ signInWithEmailAndPassword :: String -> String -> Auth -> Aff Unit
 signInWithEmailAndPassword email password auth = runFn3 signInWithEmailAndPasswordImp email password auth # toAffE
 
 -- TODO: add Unsubscribe
-foreign import onAuthStateChangedImp :: Fn2 (Nullable User -> Effect Unit) Auth (Effect Unit)
+foreign import onAuthStateChangedImp :: Fn2 (Nullable User -> Effect Unit) Auth (Effect (Effect Unit))
 
-onAuthStateChanged :: (Maybe User -> Effect Unit) -> Auth -> Effect Unit
+onAuthStateChanged :: (Maybe User -> Effect Unit) -> Auth -> Effect (Effect Unit)
 onAuthStateChanged callback = runFn2 onAuthStateChangedImp (toMaybe >>> callback)
 
 foreign import signOutImp :: Auth -> Effect (Promise Unit)
