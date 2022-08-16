@@ -1,6 +1,6 @@
 {
   "name": "purescript-firebase",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "index.js",
   "repository": "https://github.com/codingedgar/purescript-firebase.git",
   "author": "codingedgar <codingedgar@gmail.com>",
