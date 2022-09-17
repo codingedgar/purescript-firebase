@@ -4,28 +4,17 @@ const {
   query,
   where,
   getDocs,
-  CollectionReference,
-  Firestore,
-  WhereFilterOp,
-  QueryConstraint,
-  Query,
-  QuerySnapshot,
-  QueryDocumentSnapshot,
   getFirestore,
-  DocumentData,
   doc,
   deleteDoc,
-  DocumentReference,
   onSnapshot,
-  FirestoreError,
-  DocumentSnapshot,
   setDoc,
   addDoc,
 } = require("firebase/firestore");
 
 /**
  * 
- * @returns { Firestore } 
+ * @returns { import("firebase/firestore").Firestore } 
  */
 exports.getFirestoreImp = function () {
   return getFirestore();
@@ -34,8 +23,8 @@ exports.getFirestoreImp = function () {
 /**
  * 
  * @param {String} path 
- * @param {Firestore} firestore 
- * @returns {() => CollectionReference}
+ * @param {import("firebase/firestore").Firestore} firestore 
+ * @returns {() => import("firebase/firestore").CollectionReference}
  */
 exports.collectionImp = function (path, firestore) {
   return function () {
@@ -46,9 +35,9 @@ exports.collectionImp = function (path, firestore) {
 /**
  * 
  * @param {String} path 
- * @param {WhereFilterOp} opStr
+ * @param {import("firebase/firestore").WhereFilterOp} opStr
  * @param {unknown} value
- * @returns {() => QueryConstraint}
+ * @returns {() => import("firebase/firestore").QueryConstraint}
  */
 exports.whereImp = function (path, opStr, value) {
   return function () {
@@ -58,9 +47,9 @@ exports.whereImp = function (path, opStr, value) {
 
 /**
  * 
- * @param {QueryConstraint[]} queryConstraints
- * @param {Query} q
- * @returns {() => Query}
+ * @param {import("firebase/firestore").QueryConstraint[]} queryConstraints
+ * @param {import("firebase/firestore").Query} q
+ * @returns {() => import("firebase/firestore").Query}
  */
 exports.queryImp = function (queryConstraints, q) {
   return function () {
@@ -70,8 +59,8 @@ exports.queryImp = function (queryConstraints, q) {
 
 /**
  * 
- * @param {Query} q
- * @returns {() => Promise<QuerySnapshot>}
+ * @param {import("firebase/firestore").Query} q
+ * @returns {() => Promise<import("firebase/firestore").QuerySnapshot>}
  */
 exports.getDocsImp = function (q) {
   return function () {
@@ -81,8 +70,8 @@ exports.getDocsImp = function (q) {
 
 /**
  * 
- * @param {(result: QueryDocumentSnapshot) => () => void} callback
- * @param {QuerySnapshot} snapshot
+ * @param {(result: import("firebase/firestore").QueryDocumentSnapshot) => () => void} callback
+ * @param {import("firebase/firestore").QuerySnapshot} snapshot
  * @returns {() => void}
  */
 exports.foreachImp = function (callback, snapshot) {
@@ -95,8 +84,8 @@ exports.foreachImp = function (callback, snapshot) {
 
 /**
  * 
- * @param {QuerySnapshot} snapshot
- * @returns {() => QueryDocumentSnapshot[]}
+ * @param {import("firebase/firestore").QuerySnapshot} snapshot
+ * @returns {() => import("firebase/firestore").QueryDocumentSnapshot[]}
  */
 exports.getSnapshotDocsImp = function (snapshot) {
   return function () {
@@ -106,8 +95,8 @@ exports.getSnapshotDocsImp = function (snapshot) {
 
 /**
  * 
- * @param {DocumentSnapshot<DocumentData>} snapshot
- * @returns {() => DocumentData | undefined }
+ * @param {import("firebase/firestore").DocumentSnapshot<import("firebase/firestore").DocumentData>} snapshot
+ * @returns {() => import("firebase/firestore").DocumentData | undefined }
  */
 exports.getDocSnapshotDataImp = function (snapshot) {
   return function () {
@@ -118,8 +107,8 @@ exports.getDocSnapshotDataImp = function (snapshot) {
 
 /**
  * 
- * @param {QueryDocumentSnapshot} snapshot
- * @returns {() => DocumentData}
+ * @param {import("firebase/firestore").QueryDocumentSnapshot} snapshot
+ * @returns {() => import("firebase/firestore").DocumentData}
  */
 exports.getSnapshotDataImp = function (snapshot) {
   return function () {
@@ -129,10 +118,10 @@ exports.getSnapshotDataImp = function (snapshot) {
 
 /**
  * 
- * @param {Firestore} firestore 
+ * @param {import("firebase/firestore").Firestore} firestore 
  * @param {String} path
  * @param {String[]} pathSegments
- * @returns {() => DocumentReference}
+ * @returns {() => import("firebase/firestore").DocumentReference}
  */
 exports.docImp = function (firestore, path, pathSegments) {
   return function () {
@@ -142,7 +131,7 @@ exports.docImp = function (firestore, path, pathSegments) {
 
 /**
  * 
- * @param {DocumentReference} doc 
+ * @param {import("firebase/firestore").DocumentReference} doc 
  * @returns {() => Promise<void>}
  */
 exports.deleteImp = function (doc) {
@@ -153,10 +142,10 @@ exports.deleteImp = function (doc) {
 
 /**
  * 
- * @param {(snapshot: QuerySnapshot) => void} onNext 
- * @param {(error: FirestoreError) => void} onError
+ * @param {(snapshot: import("firebase/firestore").QuerySnapshot) => void} onNext 
+ * @param {(error: import("firebase/firestore").FirestoreError) => void} onError
  * @param {() => void} onCompletion
- * @param {Query} query
+ * @param {import("firebase/firestore").Query} query
  * @returns {() => () => void}
  */
 exports.onSnapshotImp = function (onNext, onError, onCompletion, query) {
@@ -168,9 +157,9 @@ exports.onSnapshotImp = function (onNext, onError, onCompletion, query) {
 
 /**
  * 
- * @param {DocumentReference<DocumentData>} doc 
- * @param {(snapshot: DocumentSnapshot) => void} onNext 
- * @param {(error: FirestoreError) => void} onError
+ * @param {import("firebase/firestore").DocumentReference<import("firebase/firestore").DocumentData>} doc 
+ * @param {(snapshot: import("firebase/firestore").DocumentSnapshot) => void} onNext 
+ * @param {(error: import("firebase/firestore").FirestoreError) => void} onError
  * @param {() => void} onCompletion
  * @returns {() => () => void}
  */
@@ -183,7 +172,7 @@ exports.onDocSnapshotImp = function (doc, onNext, onError, onCompletion) {
 
 /**
  * 
- * @param {QuerySnapshot} qs
+ * @param {import("firebase/firestore").QuerySnapshot} qs
  * @returns {() => Boolean}
  */
 exports.isQuerySnapshotEmptyImp = function (qs) {
@@ -194,8 +183,8 @@ exports.isQuerySnapshotEmptyImp = function (qs) {
 
 /**
  * 
- * @param {DocumentReference<DocumentData>} doc 
- * @param {DocumentData} data
+ * @param {import("firebase/firestore").DocumentReference<import("firebase/firestore").DocumentData>} doc 
+ * @param {import("firebase/firestore").DocumentData} data
  * @returns {() => Promise<void>}
  */
 exports.setDocImp = function (doc, data) {
@@ -206,9 +195,9 @@ exports.setDocImp = function (doc, data) {
 
 /**
  * 
- * @param {CollectionReference<DocumentData>} collection 
- * @param {DocumentData} data
- * @returns {() => Promise<DocumentReference<DocumentData>>}
+ * @param {import("firebase/firestore").CollectionReference<import("firebase/firestore").DocumentData>} collection 
+ * @param {import("firebase/firestore").DocumentData} data
+ * @returns {() => Promise<import("firebase/firestore").DocumentReference<import("firebase/firestore").DocumentData>>}
  */
 exports.addDocImp = function (collection, data) {
   return function () {

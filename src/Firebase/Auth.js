@@ -5,7 +5,6 @@ const {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  User,
   signInAnonymously,
   sendEmailVerification,
   useDeviceLanguage,
@@ -49,7 +48,7 @@ exports.signOutImp = function (auth) {
 
 /**
  * 
- * @param {User} user 
+ * @param {import("firebase/auth").User} user 
  */
 exports.getUserIdTokenImp = function (user, force) {
   return function () {
@@ -72,7 +71,7 @@ exports.getAuthImp = function (firebase) {
 // TODO: correctly type ActionCodeSettings in PS
 /**
  * 
- * @param {User} user
+ * @param {import("firebase/auth").User} user
  * @param {import("firebase/auth").ActionCodeSettings | undefined | null} config
  * @returns {() => Promise<void>}
  */
@@ -166,7 +165,7 @@ exports.useDeviceLanguageImp = function (auth) {
 
 /**
  * 
- * @param {(u: User | null) => () => void} callback
+ * @param {(u: import("firebase/auth").User | null) => () => void} callback
  * @param {import("firebase/auth").Auth} auth
  * @returns {() => () => Void} Unsubscribe
  */
