@@ -1,8 +1,15 @@
 module Firebase.Auth
   ( Auth
+  , ActionCodeSettings
+  , Email(..)
+  , IdTokenResult
+  , LanguageCode(..)
   , User
+  , UserCredential
   , createUserWithEmailAndPassword
   , getAuth
+  , getCurrentUser
+  , getIdTokenResult
   , getLanguageCode
   , getUserIdToken
   , isSignInWithEmailLink
@@ -17,27 +24,21 @@ module Firebase.Auth
   , signInWithEmailLink
   , signOut
   , useDeviceLanguage
-  , Email(..)
-  , ActionCodeSettings
-  , UserCredential
-  , LanguageCode(..)
-  , getCurrentUser
   ) where
 
 import Prelude
 
 import Control.Promise (Promise, toAffE)
+import Data.Argonaut (class DecodeJson, class EncodeJson, Json, JsonDecodeError(..), encodeJson, decodeJson)
 import Data.Either (Either, note)
 import Data.Function.Uncurried (Fn1, Fn2, Fn3, runFn1, runFn2, runFn3)
 import Data.Generic.Rep (class Generic)
-import Data.Maybe (Maybe)
+import Data.Maybe (Maybe(..))
 import Data.Nullable (Nullable, null, toMaybe)
 import Effect (Effect)
 import Effect.Aff (Aff)
 import Firebase.App (FirebaseApp)
 import Unsafe.Coerce (unsafeCoerce)
-import Data.Argonaut (class DecodeJson, class EncodeJson, Json, JsonDecodeError(..), encodeJson, decodeJson)
-import Data.Maybe (Maybe(..))
 
 foreign import data Auth :: Type
 
@@ -186,12 +187,12 @@ signInWithEmailLink emailLink (Email email) =
 
 foreign import data IdTokenResult :: Type
 
-foreign import _getIdTokenResult :: Fn2 User Boolean (Effect (Promise UserCredential))
+foreign import _getIdTokenResult :: Fn2 User Boolean (Effect (Promise IdTokenResult))
 
-getIdTokenResult :: Boolean -> User -> Auth -> Aff UserCredential
+getIdTokenResult :: Boolean -> User -> Aff IdTokenResult
 getIdTokenResult forceRefresh user =
   runFn2
     _getIdTokenResult
     user
     forceRefresh
-    >>> toAffE
+    # toAffE
