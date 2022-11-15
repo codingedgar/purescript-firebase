@@ -14,6 +14,10 @@ const {
   isSignInWithEmailLink,
 } = require("firebase/auth");
 
+export {
+  getIdTokenResult as _getIdTokenResult,
+} from "firebase/auth";
+
 export function createUserWithEmailAndPasswordImp(email, password, auth) {
   return function () {
     return createUserWithEmailAndPassword(auth, email, password);

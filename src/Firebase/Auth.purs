@@ -183,3 +183,15 @@ signInWithEmailLink emailLink (Email email) =
     emailLink
     email
     >>> toAffE
+
+foreign import data IdTokenResult :: Type
+
+foreign import _getIdTokenResult :: Fn2 User Boolean (Effect (Promise UserCredential))
+
+getIdTokenResult :: Boolean -> User -> Auth -> Aff UserCredential
+getIdTokenResult forceRefresh user =
+  runFn2
+    _getIdTokenResult
+    user
+    forceRefresh
+    >>> toAffE
