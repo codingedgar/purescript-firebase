@@ -1,6 +1,6 @@
 {
   "name": "purescript-firebase",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "index.js",
   "repository": "https://github.com/codingedgar/purescript-firebase.git",
   "author": "codingedgar <codingedgar@gmail.com>",
@@ -9,6 +9,8 @@
     "firebase": "9.9.2"
   },
   "devDependencies": {
-    "purs-tidy": "0.9.1"
+    "purescript": "0.15.4",
+    "purs-tidy": "0.9.1",
+    "spago": "0.20.9"
   }
 }

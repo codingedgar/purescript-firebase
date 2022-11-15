@@ -32,12 +32,12 @@ import Prelude
 import Control.Promise (Promise, toAffE)
 import Data.Argonaut.Core (Json)
 import Data.Function.Uncurried (Fn1, Fn2, Fn3, Fn4, runFn1, runFn2, runFn3, runFn4)
-import Data.Maybe (Maybe)
-import Data.UndefinedOr (UndefinedOr, fromUndefined)
+import Data.Maybe (Maybe(..))
 import Effect (Effect)
 import Effect.Aff (Aff)
 import Effect.Unsafe (unsafePerformEffect)
 import PointFree ((..>))
+import Foreign (Foreign, isUndefined, unsafeFromForeign)
 
 foreign import data Firestore :: Type
 foreign import data CollectionReference :: Type
@@ -95,10 +95,10 @@ foreign import getSnapshotDocsImp :: Fn1 QuerySnapshot (Effect (Array QueryDocum
 getSnapshotDocs :: QuerySnapshot -> Effect (Array QueryDocumentSnapshot)
 getSnapshotDocs = runFn1 getSnapshotDocsImp
 
-foreign import getDocSnapshotDataImp :: Fn1 DocumentReference (Effect (UndefinedOr Json))
+foreign import getDocSnapshotDataImp :: Fn1 DocumentReference (Effect Foreign)
 
 getDocSnapshotData :: DocumentReference -> Effect (Maybe Json)
-getDocSnapshotData = runFn1 getDocSnapshotDataImp >>> map fromUndefined
+getDocSnapshotData = runFn1 getDocSnapshotDataImp >>> map (\d -> if isUndefined d then Nothing else Just (unsafeFromForeign d))
 
 foreign import getSnapshotDataImp :: Fn1 QueryDocumentSnapshot (Effect Json)
 

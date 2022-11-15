@@ -16,7 +16,7 @@ const {
  * 
  * @returns { import("firebase/firestore").Firestore } 
  */
-exports.getFirestoreImp = function () {
+export function getFirestoreImp() {
   return getFirestore();
 }
 
@@ -26,7 +26,7 @@ exports.getFirestoreImp = function () {
  * @param {import("firebase/firestore").Firestore} firestore 
  * @returns {() => import("firebase/firestore").CollectionReference}
  */
-exports.collectionImp = function (path, firestore) {
+export function collectionImp(path, firestore) {
   return function () {
     return collection(firestore, path);
   }
@@ -39,7 +39,7 @@ exports.collectionImp = function (path, firestore) {
  * @param {unknown} value
  * @returns {() => import("firebase/firestore").QueryConstraint}
  */
-exports.whereImp = function (path, opStr, value) {
+export function whereImp(path, opStr, value) {
   return function () {
     return where(path, opStr, value);
   }
@@ -51,7 +51,7 @@ exports.whereImp = function (path, opStr, value) {
  * @param {import("firebase/firestore").Query} q
  * @returns {() => import("firebase/firestore").Query}
  */
-exports.queryImp = function (queryConstraints, q) {
+export function queryImp(queryConstraints, q) {
   return function () {
     return query(q, ...queryConstraints);
   }
@@ -62,7 +62,7 @@ exports.queryImp = function (queryConstraints, q) {
  * @param {import("firebase/firestore").Query} q
  * @returns {() => Promise<import("firebase/firestore").QuerySnapshot>}
  */
-exports.getDocsImp = function (q) {
+export function getDocsImp(q) {
   return function () {
     return getDocs(q);
   }
@@ -74,7 +74,7 @@ exports.getDocsImp = function (q) {
  * @param {import("firebase/firestore").QuerySnapshot} snapshot
  * @returns {() => void}
  */
-exports.foreachImp = function (callback, snapshot) {
+export function foreachImp(callback, snapshot) {
   return function () {
     return snapshot.forEach(result => {
       callback(result)()
@@ -87,7 +87,7 @@ exports.foreachImp = function (callback, snapshot) {
  * @param {import("firebase/firestore").QuerySnapshot} snapshot
  * @returns {() => import("firebase/firestore").QueryDocumentSnapshot[]}
  */
-exports.getSnapshotDocsImp = function (snapshot) {
+export function getSnapshotDocsImp(snapshot) {
   return function () {
     return snapshot.docs
   }
@@ -98,7 +98,7 @@ exports.getSnapshotDocsImp = function (snapshot) {
  * @param {import("firebase/firestore").DocumentSnapshot<import("firebase/firestore").DocumentData>} snapshot
  * @returns {() => import("firebase/firestore").DocumentData | undefined }
  */
-exports.getDocSnapshotDataImp = function (snapshot) {
+export function getDocSnapshotDataImp(snapshot) {
   return function () {
     // TODO: map options
     return snapshot.data()
@@ -110,7 +110,7 @@ exports.getDocSnapshotDataImp = function (snapshot) {
  * @param {import("firebase/firestore").QueryDocumentSnapshot} snapshot
  * @returns {() => import("firebase/firestore").DocumentData}
  */
-exports.getSnapshotDataImp = function (snapshot) {
+export function getSnapshotDataImp(snapshot) {
   return function () {
     return snapshot.data()
   }
@@ -123,7 +123,7 @@ exports.getSnapshotDataImp = function (snapshot) {
  * @param {String[]} pathSegments
  * @returns {() => import("firebase/firestore").DocumentReference}
  */
-exports.docImp = function (firestore, path, pathSegments) {
+export function docImp(firestore, path, pathSegments) {
   return function () {
     return doc(firestore, path, ...pathSegments)
   }
@@ -134,7 +134,7 @@ exports.docImp = function (firestore, path, pathSegments) {
  * @param {import("firebase/firestore").DocumentReference} doc 
  * @returns {() => Promise<void>}
  */
-exports.deleteImp = function (doc) {
+export function deleteImp(doc) {
   return function () {
     return deleteDoc(doc)
   }
@@ -148,7 +148,7 @@ exports.deleteImp = function (doc) {
  * @param {import("firebase/firestore").Query} query
  * @returns {() => () => void}
  */
-exports.onSnapshotImp = function (onNext, onError, onCompletion, query) {
+export function onSnapshotImp(onNext, onError, onCompletion, query) {
   return function () {
     // TODO: map other signature variations
     return onSnapshot(query, onNext, onError, onCompletion)
@@ -163,7 +163,7 @@ exports.onSnapshotImp = function (onNext, onError, onCompletion, query) {
  * @param {() => void} onCompletion
  * @returns {() => () => void}
  */
-exports.onDocSnapshotImp = function (doc, onNext, onError, onCompletion) {
+export function onDocSnapshotImp(doc, onNext, onError, onCompletion) {
   return function () {
     // TODO: map other signature variations
     return onSnapshot(doc, onNext, onError, onCompletion)
@@ -175,7 +175,7 @@ exports.onDocSnapshotImp = function (doc, onNext, onError, onCompletion) {
  * @param {import("firebase/firestore").QuerySnapshot} qs
  * @returns {() => Boolean}
  */
-exports.isQuerySnapshotEmptyImp = function (qs) {
+export function isQuerySnapshotEmptyImp(qs) {
   return function () {
     return qs.empty
   }
@@ -187,7 +187,7 @@ exports.isQuerySnapshotEmptyImp = function (qs) {
  * @param {import("firebase/firestore").DocumentData} data
  * @returns {() => Promise<void>}
  */
-exports.setDocImp = function (doc, data) {
+export function setDocImp(doc, data) {
   return function () {
     return setDoc(doc, data)
   }
@@ -199,7 +199,7 @@ exports.setDocImp = function (doc, data) {
  * @param {import("firebase/firestore").DocumentData} data
  * @returns {() => Promise<import("firebase/firestore").DocumentReference<import("firebase/firestore").DocumentData>>}
  */
-exports.addDocImp = function (collection, data) {
+export function addDocImp(collection, data) {
   return function () {
     return addDoc(collection, data)
   }

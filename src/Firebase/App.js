@@ -1,7 +1,7 @@
 // @ts-check
 const { initializeApp, getApp } = require("firebase/app");
 
-exports.initializeAppImp = function (config) {
+export function initializeAppImp(config) {
   return function () {
     return initializeApp(config);
   }
@@ -12,7 +12,7 @@ exports.initializeAppImp = function (config) {
  * @param {String} name
  * @returns {() => import("firebase/app").FirebaseApp}
  */
- exports.getAppImp = function (name) {
+export function getAppImp(name) {
   return function () {
     return getApp(name);
   }
@@ -22,6 +22,6 @@ exports.initializeAppImp = function (config) {
  * 
  * @returns {import("firebase/app").FirebaseApp}
  */
-exports.getApp2Imp = function () {
-    return getApp();
+export function getApp2Imp() {
+  return getApp();
 }

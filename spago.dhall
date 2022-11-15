@@ -14,19 +14,16 @@ to generate this file without the comments in this block.
 , dependencies =
   [ "aff"
   , "aff-promise"
+  , "argonaut"
   , "argonaut-core"
   , "effect"
   , "either"
   , "foreign"
-  , "foreign-generic"
   , "functions"
   , "maybe"
   , "nullable"
   , "point-free"
   , "prelude"
-  , "psci-support"
-  , "transformers"
-  , "undefined-or"
   , "unsafe-coerce"
   ]
 , packages = ./packages.dhall

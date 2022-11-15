@@ -26,9 +26,8 @@ module Firebase.Auth
 
 import Prelude
 
-import Control.Monad.Except (runExcept)
 import Control.Promise (Promise, toAffE)
-import Data.Either (Either)
+import Data.Either (Either, note)
 import Data.Function.Uncurried (Fn1, Fn2, Fn3, runFn1, runFn2, runFn3)
 import Data.Generic.Rep (class Generic)
 import Data.Maybe (Maybe)
@@ -36,9 +35,9 @@ import Data.Nullable (Nullable, null, toMaybe)
 import Effect (Effect)
 import Effect.Aff (Aff)
 import Firebase.App (FirebaseApp)
-import Foreign (MultipleErrors, fail, readString)
-import Foreign.Generic (Foreign, decode, encode, class Decode, class Encode, ForeignError(..))
 import Unsafe.Coerce (unsafeCoerce)
+import Data.Argonaut (class DecodeJson, class EncodeJson, Json, JsonDecodeError(..), encodeJson, decodeJson)
+import Data.Maybe (Maybe(..))
 
 foreign import data Auth :: Type
 
@@ -60,22 +59,26 @@ instance showLanguageCode :: Show LanguageCode where
 
 derive instance genericLanguageCode :: Generic LanguageCode _
 
-instance encodeLanguageCode :: Encode LanguageCode where
-  encode =
-    case _ of
-      Spanish -> "es"
-      SpanishLatinAmerica -> "es_419"
-      English -> "en"
-      >>> encode
+instance encodeJsonLanguageCode :: EncodeJson LanguageCode where
+  encodeJson =
+    ( case _ of
+        Spanish -> "es"
+        SpanishLatinAmerica -> "es_419"
+        English -> "en"
+    )
+      >>> encodeJson
 
-instance decodeLanguageCode :: Decode LanguageCode where
-  decode s =
-    readString s
-      >>= case _ of
-        "es" -> pure Spanish
-        "es_419" -> pure SpanishLatinAmerica
-        "en" -> pure English
-        x -> fail $ ForeignError ("cannot place locale" <> x)
+instance decodeJsonLanguageCode :: DecodeJson LanguageCode where
+  decodeJson json =
+    do
+      string <- decodeJson json
+      ( case string of
+          "es" -> pure Spanish
+          "es_419" -> pure SpanishLatinAmerica
+          "en" -> pure English
+          _ -> Nothing
+      )
+        # note (TypeMismatch string)
 
 foreign import getAuthImp :: FirebaseApp -> Effect Auth
 
@@ -133,15 +136,15 @@ foreign import sendEmailVerificationImp :: Fn2 User (Nullable ActionCodeSettings
 sendEmailVerification :: User -> Aff Unit
 sendEmailVerification user = runFn2 sendEmailVerificationImp user null # toAffE
 
-foreign import setLanguageCodeImp :: Fn2 Auth Foreign (Effect Unit)
+foreign import setLanguageCodeImp :: Fn2 Auth Json (Effect Unit)
 
 setLanguageCode :: LanguageCode -> Auth -> Effect Unit
-setLanguageCode lang auth = runFn2 setLanguageCodeImp auth (encode lang)
+setLanguageCode lang auth = runFn2 setLanguageCodeImp auth (encodeJson lang)
 
-foreign import getLanguageCodeImp :: Fn1 Auth (Effect Foreign)
+foreign import getLanguageCodeImp :: Fn1 Auth (Effect Json)
 
-getLanguageCode :: Auth -> Effect (Either MultipleErrors LanguageCode)
-getLanguageCode auth = runFn1 getLanguageCodeImp auth # map (decode >>> runExcept)
+getLanguageCode :: Auth -> Effect (Either JsonDecodeError LanguageCode)
+getLanguageCode auth = runFn1 getLanguageCodeImp auth # map decodeJson
 
 foreign import useDeviceLanguageImp :: Fn1 Auth (Effect Unit)
 

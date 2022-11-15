@@ -14,25 +14,25 @@ const {
   isSignInWithEmailLink,
 } = require("firebase/auth");
 
-exports.createUserWithEmailAndPasswordImp = function (email, password, auth) {
+export function createUserWithEmailAndPasswordImp(email, password, auth) {
   return function () {
     return createUserWithEmailAndPassword(auth, email, password);
   }
 }
 
-exports.signInAnonymouslyImp = function (auth) {
+export function signInAnonymouslyImp(auth) {
   return function () {
     return signInAnonymously(auth);
   }
 }
 
-exports.signInWithEmailAndPasswordImp = function (email, password, auth) {
+export function signInWithEmailAndPasswordImp(email, password, auth) {
   return function () {
     return signInWithEmailAndPassword(auth, email, password);
   }
 }
 
-exports.onAuthStateChangedImp = function (callback, auth) {
+export function onAuthStateChangedImp(callback, auth) {
   return function () {
     return onAuthStateChanged(auth, user => {
       callback(user)();
@@ -40,7 +40,7 @@ exports.onAuthStateChangedImp = function (callback, auth) {
   }
 }
 
-exports.signOutImp = function (auth) {
+export function signOutImp(auth) {
   return function () {
     return signOut(auth);
   }
@@ -50,7 +50,7 @@ exports.signOutImp = function (auth) {
  * 
  * @param {import("firebase/auth").User} user 
  */
-exports.getUserIdTokenImp = function (user, force) {
+export function getUserIdTokenImp(user, force) {
   return function () {
     return user.getIdToken(force)
   }
@@ -62,7 +62,7 @@ exports.getUserIdTokenImp = function (user, force) {
  * @param {import("firebase/app").FirebaseApp} firebase 
  * @returns {() => import("firebase/auth").Auth}
  */
-exports.getAuthImp = function (firebase) {
+export function getAuthImp(firebase) {
   return function () {
     return getAuth(firebase);
   }
@@ -75,7 +75,7 @@ exports.getAuthImp = function (firebase) {
  * @param {import("firebase/auth").ActionCodeSettings | undefined | null} config
  * @returns {() => Promise<void>}
  */
-exports.sendEmailVerificationImp = function (user, config) {
+export function sendEmailVerificationImp(user, config) {
   return function () {
     return sendEmailVerification(user, config)
   }
@@ -135,7 +135,7 @@ exports.sendEmailVerificationImp = function (user, config) {
  * @param { Locale } languageCode
  * @returns {() => void}
  */
-exports.setLanguageCodeImp = function (auth, languageCode) {
+export function setLanguageCodeImp(auth, languageCode) {
   return function () {
     auth.languageCode = languageCode
   }
@@ -146,7 +146,7 @@ exports.setLanguageCodeImp = function (auth, languageCode) {
  * @param {import("firebase/auth").Auth} auth
  * @returns {() => void}
  */
-exports.getLanguageCodeImp = function (auth) {
+export function getLanguageCodeImp(auth) {
   return function () {
     auth.languageCode
   }
@@ -157,7 +157,7 @@ exports.getLanguageCodeImp = function (auth) {
  * @param {import("firebase/auth").Auth} auth
  * @returns {() => Void}
  */
-exports.useDeviceLanguageImp = function (auth) {
+export function useDeviceLanguageImp(auth) {
   return function () {
     return useDeviceLanguage(auth)
   }
@@ -169,7 +169,7 @@ exports.useDeviceLanguageImp = function (auth) {
  * @param {import("firebase/auth").Auth} auth
  * @returns {() => () => Void} Unsubscribe
  */
-exports.onIdTokenChangedImp = function (callback, auth) {
+export function onIdTokenChangedImp(callback, auth) {
   return function () {
     return onIdTokenChanged(auth, user => {
       callback(user)();
@@ -184,7 +184,7 @@ exports.onIdTokenChangedImp = function (callback, auth) {
  * @param {import("firebase/auth").Auth} auth
  * @returns {() => Promise<Void>}
  */
-exports.sendSignInLinkToEmailImp = function (actionCodeSettings, email, auth) {
+export function sendSignInLinkToEmailImp(actionCodeSettings, email, auth) {
   return function () {
     return sendSignInLinkToEmail(auth, email, actionCodeSettings)
   }
@@ -196,7 +196,7 @@ exports.sendSignInLinkToEmailImp = function (actionCodeSettings, email, auth) {
  * @param {import("firebase/auth").Auth} auth
  * @returns {() => Boolean}
  */
-exports.isSignInWithEmailLinkImp = function (emailLink, auth) {
+export function isSignInWithEmailLinkImp(emailLink, auth) {
   return function () {
     return isSignInWithEmailLink(auth, emailLink)
   }
@@ -209,7 +209,7 @@ exports.isSignInWithEmailLinkImp = function (emailLink, auth) {
  * @param {import("firebase/auth").Auth} auth
  * @returns {() => Promise<import("firebase/auth").UserCredential>}
  */
-exports.signInWithEmailLinkImp = function (emailLink, email, auth) {
+export function signInWithEmailLinkImp(emailLink, email, auth) {
   return function () {
     return signInWithEmailLink(auth, email, emailLink)
   }
