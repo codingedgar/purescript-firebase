@@ -28,7 +28,7 @@ module Firebase.Auth
 
 import Prelude
 
-import Control.Promise (Promise, toAffE)
+import Control.Promise (Promise, toAffE, toAff)
 import Data.Argonaut (class DecodeJson, class EncodeJson, Json, JsonDecodeError(..), encodeJson, decodeJson)
 import Data.Either (Either, note)
 import Data.Function.Uncurried (Fn1, Fn2, Fn3, runFn1, runFn2, runFn3)
@@ -187,12 +187,11 @@ signInWithEmailLink emailLink (Email email) =
 
 foreign import data IdTokenResult :: Type
 
-foreign import _getIdTokenResult :: Fn2 User Boolean (Effect (Promise IdTokenResult))
+foreign import _getIdTokenResult :: Fn2 User Boolean (Promise IdTokenResult)
 
 getIdTokenResult :: Boolean -> User -> Aff IdTokenResult
 getIdTokenResult forceRefresh user =
-  runFn2
+  toAff $ runFn2
     _getIdTokenResult
     user
     forceRefresh
-    # toAffE
