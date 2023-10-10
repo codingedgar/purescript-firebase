@@ -1,5 +1,5 @@
 // @ts-check
-const { initializeApp, getApp } = require("firebase/app");
+import { initializeApp, getApp } from "firebase/app";
 
 export function initializeAppImp(config) {
   return function () {

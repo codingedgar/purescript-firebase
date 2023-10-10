@@ -1,5 +1,5 @@
 // @ts-check
-const {
+import {
   getAuth,
   onAuthStateChanged,
   createUserWithEmailAndPassword,
@@ -12,7 +12,7 @@ const {
   sendSignInLinkToEmail,
   signInWithEmailLink,
   isSignInWithEmailLink,
-} = require("firebase/auth");
+} from "firebase/auth";
 
 export {
   getIdTokenResult as _getIdTokenResult,

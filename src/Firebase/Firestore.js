@@ -1,5 +1,5 @@
 // @ts-check
-const {
+import {
   collection,
   query,
   where,
@@ -10,7 +10,7 @@ const {
   onSnapshot,
   setDoc,
   addDoc,
-} = require("firebase/firestore");
+} from "firebase/firestore";
 
 /**
  * 
