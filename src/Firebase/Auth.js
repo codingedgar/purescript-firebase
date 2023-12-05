@@ -1,4 +1,3 @@
-// @ts-check
 import {
   getAuth,
   onAuthStateChanged,

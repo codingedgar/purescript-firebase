@@ -1,4 +1,3 @@
-// @ts-check
 import { initializeApp, getApp } from "firebase/app";
 
 export function initializeAppImp(config) {

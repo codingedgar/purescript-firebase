@@ -1,4 +1,3 @@
-// @ts-check
 import {
   collection,
   query,
